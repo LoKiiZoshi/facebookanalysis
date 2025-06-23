@@ -55,7 +55,7 @@ ROOT_URLCONF = 'facebook_crm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],   
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,4 +129,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Facebook API Configuration
 FACEBOOK_APP_ID = '1435605817637660'
 FACEBOOK_APP_SECRET = '1cea4b8514f86c712fa92284873310c4'
-FACEBOOK_ACCESS_TOKEN = 'EAAUZArQbMOxwBO27um8Ri7ZCgymHwK7ZCRyBxdXkHUAnqjP2Rd0Xn4MDFvxzPerCDMbs4RCtWd9sNk7j0ZB8kxzZAAzEZAEWIohDVoBNQJIoJBeQVfIaCMmDilOVEoW6obGtpRFE2UDr8icju3WJjxEVZALlrZAZAlTETNvmfmno30yZAbXYm1xibZBvJ2ipZB7yGaL6JSn1sztZBg7rNZAnm57FxAfBjVp5vkWE0L'
+FACEBOOK_ACCESS_TOKEN = 'EAAUZArQbMOxwBO0cfO5GPZABsuG05voqBKECDi5NU2UDuIu66MoIE651niHYQhZBK8YZCJ5m5Qn6SwZAIi1ED7MmaKX4MgRQdq9hTjZBLGllXVqsxnNv9a4BUjsL8K6vEwnuYFxEn466oYsb2mZBPaZArWlSAu3v1zgOt9ainCzYCuexseZBsXxeIWRikZBSD1lfdWElvKZBAADW7zWdiHRiIpMCDgGKPP61K5OfAZDZD'

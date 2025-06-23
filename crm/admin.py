@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import FacebookPage, FacebookPost, FacebookComment, FacebookMessage
 
+
 @admin.register(FacebookPage)
 class FacebookPageAdmin(admin.ModelAdmin):
     list_display = ['name', 'page_id', 'followers_count', 'created_at']
