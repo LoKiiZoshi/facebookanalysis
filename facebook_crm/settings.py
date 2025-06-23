@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crm',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+# Facebook API Configuration
+FACEBOOK_APP_ID = '1435605817637660'
+FACEBOOK_APP_SECRET = '1cea4b8514f86c712fa92284873310c4'
+FACEBOOK_ACCESS_TOKEN = 'EAAUZArQbMOxwBO27um8Ri7ZCgymHwK7ZCRyBxdXkHUAnqjP2Rd0Xn4MDFvxzPerCDMbs4RCtWd9sNk7j0ZB8kxzZAAzEZAEWIohDVoBNQJIoJBeQVfIaCMmDilOVEoW6obGtpRFE2UDr8icju3WJjxEVZALlrZAZAlTETNvmfmno30yZAbXYm1xibZBvJ2ipZB7yGaL6JSn1sztZBg7rNZAnm57FxAfBjVp5vkWE0L'
