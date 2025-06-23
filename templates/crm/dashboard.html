@@ -1,483 +1,604 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facebook Business CRM Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #1877f2, #42a5f5);
-            color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .sync-btn {
-            background: #fff;
-            color: #1877f2;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .sync-btn:hover {
-            background: #f0f0f0;
-            transform: translateY(-2px);
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #1877f2;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1877f2, #42a5f5);
+        color: white;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .sync-btn {
+        background: #fff;
+        color: #1877f2;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .sync-btn:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .permission-alert {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        color: #856404;
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 2rem;
+      }
+
+      .permission-alert h3 {
+        margin-bottom: 0.5rem;
+        color: #d63031;
+      }
+
+      .permission-list {
+        list-style: none;
+        padding-left: 1rem;
+      }
+
+      .permission-list li {
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        background: #fff;
+        border-radius: 3px;
+        border-left: 4px solid #e17055;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #1877f2;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .section-header {
+        background: #1877f2;
+        color: white;
+        padding: 1rem 1.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .section-content {
+        padding: 1.5rem;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .item {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+        background: #f9f9f9;
+      }
+
+      .item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .item-title {
+        font-weight: bold;
+        color: #1877f2;
+      }
+
+      .item-date {
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .item-content {
+        color: #555;
+        margin-bottom: 0.5rem;
+      }
+
+      .engagement-stats {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8rem;
+        color: #666;
+      }
+
+      .engagement-stat {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      .pages-section {
+        margin-bottom: 2rem;
+      }
+
+      .page-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+      }
+
+      .page-name {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #1877f2;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-info {
+        display: flex;
+        gap: 2rem;
+        color: #666;
+      }
+
+      .messages {
+        margin: 1rem 2rem;
+      }
+
+      .alert {
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+      }
+
+      .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .alert-warning {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+
+      .permission-guide {
+        background: #e3f2fd;
+        border: 1px solid #2196f3;
+        border-radius: 5px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .permission-guide h4 {
+        color: #1976d2;
+        margin-bottom: 0.5rem;
+      }
+
+      .permission-guide ol {
+        padding-left: 1.5rem;
+      }
+
+      .permission-guide li {
+        margin-bottom: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
         .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+          grid-template-columns: 1fr;
         }
-        
-        .section {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
+
+        .container {
+          padding: 1rem;
         }
-        
-        .section-header {
-            background: #1877f2;
-            color: white;
-            padding: 1rem 1.5rem;
-            font-size: 1.2rem;
-            font-weight: bold;
+
+        .header {
+          padding: 1rem;
         }
-        
-        .section-content {
-            padding: 1.5rem;
-            max-height: 400px;
-            overflow-y: auto;
+
+        .header h1 {
+          font-size: 1.5rem;
         }
-        
-        .item {
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 1rem;
-            border-radius: 5px;
-            background: #f9f9f9;
-        }
-        
-        .item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        
-        .item-title {
-            font-weight: bold;
-            color: #1877f2;
-        }
-        
-        .item-date {
-            color: #666;
-            font-size: 0.8rem;
-        }
-        
-        .item-content {
-            color: #555;
-            margin-bottom: 0.5rem;
-        }
-        
-        .engagement-stats {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.8rem;
-            color: #666;
-        }
-        
-        .engagement-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        
-        .full-width {
-            grid-column: 1 / -1;
-        }
-        
-        .pages-section {
-            margin-bottom: 2rem;
-        }
-        
-        .page-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 1rem;
-        }
-        
-        .page-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1877f2;
-            margin-bottom: 0.5rem;
-        }
-        
-        .page-info {
-            display: flex;
-            gap: 2rem;
-            color: #666;
-        }
-        
-        .messages {
-            margin: 1rem 2rem;
-        }
-        
-        .alert {
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
-        
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        @media (max-width: 768px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .header {
-                padding: 1rem;
-            }
-            
-            .header h1 {
-                font-size: 1.5rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>Facebook Business CRM Dashboard</h1>
-        <p>Manage your Facebook business account interactions and analytics</p>
-        <a href="{% url 'crm:sync_data' %}" class="sync-btn">🔄 Sync Facebook Data</a>
+      <h1>Facebook Business CRM Dashboard</h1>
+      <p>Manage your Facebook business account interactions and analytics</p>
+      <a href="{% url 'crm:sync_data' %}" class="sync-btn"
+        >🔄 Sync Facebook Data</a
+      >
     </div>
 
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
     <div class="container">
-        <!-- Statistics Overview -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">{{ total_posts }}</div>
-                <div class="stat-label">Total Posts</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ total_likes }}</div>
-                <div class="stat-label">Total Likes</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ total_comments }}</div>
-                <div class="stat-label">Total Comments</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ total_shares }}</div>
-                <div class="stat-label">Total Shares</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ total_messages }}</div>
-                <div class="stat-label">Total Messages</div>
-            </div>
-        </div>
+      <!-- Permission Status -->
+      {% if missing_permissions %}
+      <div class="permission-alert">
+        <h3>⚠️ Missing Facebook Permissions</h3>
+        <p>
+          To get comments, messages, and detailed engagement data, you need
+          these additional permissions:
+        </p>
+        <ul class="permission-list">
+          {% for perm in missing_permissions %}
+          <li>
+            <strong>{{ perm.permission }}</strong>: {{ perm.description }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
 
-        <!-- Business Pages -->
-        {% if pages %}
-        <div class="pages-section">
-            <h2 style="margin-bottom: 1rem; color: #1877f2;">📄 Your Business Pages</h2>
-            {% for page in pages %}
-            <div class="page-card">
-                <div class="page-name">{{ page.name }}</div>
-                <div class="page-info">
-                    <span><strong>Category:</strong> {{ page.category|default:"Not specified" }}</span>
-                    <span><strong>Followers:</strong> {{ page.followers_count|default:0 }}</span>
-                    <span><strong>Page ID:</strong> {{ page.page_id }}</span>
+      <div class="permission-guide">
+        <h4>🔧 How to Get Missing Permissions:</h4>
+        <ol>
+          <li>
+            Go to
+            <a
+              href="https://developers.facebook.com/apps/{{ FACEBOOK_APP_ID }}/app-review/permissions/"
+              target="_blank"
+              >Facebook Developers Console</a
+            >
+          </li>
+          <li>Click on "App Review" → "Permissions and Features"</li>
+          <li>
+            Request these permissions: {% for perm in missing_permissions %}{{
+            perm.permission }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          </li>
+          <li>Generate a new access token with the new permissions</li>
+          <li>Update your access token in the settings</li>
+        </ol>
+      </div>
+      {% endif %}
+
+      <!-- Statistics Overview -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">{{ total_posts }}</div>
+          <div class="stat-label">Total Posts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ total_likes }}</div>
+          <div class="stat-label">Total Reactions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ total_comments }}</div>
+          <div class="stat-label">Total Comments</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ total_shares }}</div>
+          <div class="stat-label">Total Shares</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ total_messages }}</div>
+          <div class="stat-label">Total Messages</div>
+        </div>
+      </div>
+
+      <!-- Business Pages -->
+      {% if pages %}
+      <div class="pages-section">
+        <h2 style="margin-bottom: 1rem; color: #1877f2">
+          📄 Your Business Pages
+        </h2>
+        {% for page in pages %}
+        <div class="page-card">
+          <div class="page-name">{{ page.name }}</div>
+          <div class="page-info">
+            <span><strong>Category:</strong> {{ page.category }}</span>
+            <span><strong>Followers:</strong> {{ page.followers_count}}</span>
+            <span><strong>Page ID:</strong> {{ page.page_id }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Main Content Grid -->
+      <div class="content-grid">
+        <!-- Recent Posts -->
+        <div class="section">
+          <div class="section-header">
+            📝 Recent Posts ({{ total_posts }} total)
+          </div>
+          <div class="section-content">
+            {% for post in recent_posts %}
+            <div class="item">
+              <div class="item-header">
+                <div class="item-title">
+                  Post #{{ post.post_id|slice:":10" }}...
                 </div>
+                <div class="item-date">
+                  {{ post.created_time|date:"M d, Y H:i" }}
+                </div>
+              </div>
+              <div class="item-content">
+                {{ post.message|truncatewords:20|default:"No message content" }}
+              </div>
+              <div class="engagement-stats">
+                <div class="engagement-stat">
+                  <span>👍</span>
+                  <span>{{ post.likes_count }} reactions</span>
+                </div>
+                <div class="engagement-stat">
+                  <span>💬</span>
+                  <span>{{ post.comments_count }} comments</span>
+                </div>
+                <div class="engagement-stat">
+                  <span>🔄</span>
+                  <span>{{ post.shares_count }} shares</span>
+                </div>
+              </div>
             </div>
+            {% empty %}
+            <p style="text-align: center; color: #666; padding: 2rem">
+              No posts found. Click "Sync Facebook Data" to fetch your posts.
+            </p>
             {% endfor %}
-        </div>
-        {% endif %}
-
-        <!-- Main Content Grid -->
-        <div class="content-grid">
-            <!-- Recent Posts -->
-            <div class="section">
-                <div class="section-header">
-                    📝 Recent Posts ({{ total_posts }} total)
-                </div>
-                <div class="section-content">
-                    {% for post in recent_posts %}
-                    <div class="item">
-                        <div class="item-header">
-                            <div class="item-title">Post #{{ post.post_id|slice:":10" }}...</div>
-                            <div class="item-date">{{ post.created_time|date:"M d, Y H:i" }}</div>
-                        </div>
-                        <div class="item-content">
-                            {{ post.message|truncatewords:20|default:"No message content" }}
-                        </div>
-                        <div class="engagement-stats">
-                            <div class="engagement-stat">
-                                <span>👍</span>
-                                <span>{{ post.likes_count }} likes</span>
-                            </div>
-                            <div class="engagement-stat">
-                                <span>💬</span>
-                                <span>{{ post.comments_count }} comments</span>
-                            </div>
-                            <div class="engagement-stat">
-                                <span>🔄</span>
-                                <span>{{ post.shares_count }} shares</span>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p style="text-align: center; color: #666; padding: 2rem;">No posts found. Click "Sync Facebook Data" to fetch your posts.</p>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Recent Comments -->
-            <div class="section">
-                <div class="section-header">
-                    💬 Recent Comments ({{ total_comments }} total)
-                </div>
-                <div class="section-content">
-                    {% for comment in recent_comments %}
-                    <div class="item">
-                        <div class="item-header">
-                            <div class="item-title">{{ comment.from_name }}</div>
-                            <div class="item-date">{{ comment.created_time|date:"M d, Y H:i" }}</div>
-                        </div>
-                        <div class="item-content">
-                            {{ comment.message|truncatewords:15 }}
-                        </div>
-                        <div style="font-size: 0.8rem; color: #666;">
-                            On post: {{ comment.post.post_id|slice:":10" }}...
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p style="text-align: center; color: #666; padding: 2rem;">No comments found. Sync your data to see comments.</p>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Recent Messages -->
-            <div class="section">
-                <div class="section-header">
-                    📨 Recent Messages ({{ total_messages }} total)
-                </div>
-                <div class="section-content">
-                    {% for message in recent_messages %}
-                    <div class="item">
-                        <div class="item-header">
-                            <div class="item-title">{{ message.from_name }}</div>
-                            <div class="item-date">{{ message.created_time|date:"M d, Y H:i" }}</div>
-                        </div>
-                        <div class="item-content">
-                            {{ message.message|truncatewords:20 }}
-                        </div>
-                        <div style="font-size: 0.8rem; color: #666;">
-                            Page: {{ message.page.name }}
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p style="text-align: center; color: #666; padding: 2rem;">No messages found. Sync your data to see inbox messages.</p>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- All Posts with Details -->
-            <div class="section">
-                <div class="section-header">
-                    📊 All Posts with Engagement
-                </div>
-                <div class="section-content">
-                    {% for post in posts %}
-                    <div class="item">
-                        <div class="item-header">
-                            <div class="item-title">{{ post.page.name }}</div>
-                            <div class="item-date">{{ post.created_time|date:"M d, Y H:i" }}</div>
-                        </div>
-                        <div class="item-content">
-                            <strong>Post ID:</strong> {{ post.post_id }}<br>
-                            <strong>Message:</strong> {{ post.message|truncatewords:25|default:"No message content" }}
-                        </div>
-                        <div class="engagement-stats">
-                            <div class="engagement-stat">
-                                <span>👍</span>
-                                <span>{{ post.likes_count }}</span>
-                            </div>
-                            <div class="engagement-stat">
-                                <span>💬</span>
-                                <span>{{ post.comments_count }}</span>
-                            </div>
-                            <div class="engagement-stat">
-                                <span>🔄</span>
-                                <span>{{ post.shares_count }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p style="text-align: center; color: #666; padding: 2rem;">No posts available. Please sync your Facebook data.</p>
-                    {% endfor %}
-                </div>
-            </div>
+          </div>
         </div>
 
-        <!-- Full Width Sections -->
-        <div class="section full-width">
-            <div class="section-header">
-                👥 All Comments with User Details
-            </div>
-            <div class="section-content">
-                {% for comment in comments %}
-                <div class="item">
-                    <div class="item-header">
-                        <div class="item-title">{{ comment.from_name }} (ID: {{ comment.from_id }})</div>
-                        <div class="item-date">{{ comment.created_time|date:"M d, Y H:i" }}</div>
-                    </div>
-                    <div class="item-content">
-                        <strong>Comment:</strong> {{ comment.message }}<br>
-                        <strong>On Post:</strong> {{ comment.post.post_id }}<br>
-                        <strong>Page:</strong> {{ comment.post.page.name }}
-                    </div>
+        <!-- Recent Comments -->
+        <div class="section">
+          <div class="section-header">
+            💬 Recent Comments ({{ total_comments }} total)
+          </div>
+          <div class="section-content">
+            {% for comment in recent_comments %}
+            <div class="item">
+              <div class="item-header">
+                <div class="item-title">{{ comment.from_name}}</div>
+                <div class="item-date">
+                  {{ comment.created_time|date:"M d, Y H:i" }}
                 </div>
-                {% empty %}
-                <p style="text-align: center; color: #666; padding: 2rem;">No comments available. Please sync your Facebook data.</p>
-                {% endfor %}
+              </div>
+              <div class="item-content">
+                {{ comment.message|truncatewords:15 }}
+              </div>
+              <div style="font-size: 0.8rem; color: #666">
+                On post: {{ comment.post.post_id|slice:":10" }}...
+              </div>
             </div>
+            {% empty %}
+            <p style="text-align: center; color: #666; padding: 2rem">
+              {% if missing_permissions %} No comments found. Missing
+              permissions: pages_read_engagement {% else %} No comments found.
+              Sync your data to see comments. {% endif %}
+            </p>
+            {% endfor %}
+          </div>
         </div>
 
-        <div class="section full-width">
-            <div class="section-header">
-                📬 All Messages with User Details
-            </div>
-            <div class="section-content">
-                {% for message in messages %}
-                <div class="item">
-                    <div class="item-header">
-                        <div class="item-title">{{ message.from_name }} (ID: {{ message.from_id }})</div>
-                        <div class="item-date">{{ message.created_time|date:"M d, Y H:i" }}</div>
-                    </div>
-                    <div class="item-content">
-                        <strong>Message:</strong> {{ message.message }}<br>
-                        <strong>Page:</strong> {{ message.page.name }}
-                    </div>
+        <!-- Recent Messages -->
+        <div class="section">
+          <div class="section-header">
+            📨 Recent Messages ({{ total_messages }} total)
+          </div>
+          <div class="section-content">
+            {% for message in recent_messages %}
+            <div class="item">
+              <div class="item-header">
+                <div class="item-title">{{ message.from_name }}</div>
+                <div class="item-date">
+                  {{ message.created_time|date:"M d, Y H:i" }}
                 </div>
-                {% empty %}
-                <p style="text-align: center; color: #666; padding: 2rem;">No messages available. Please sync your Facebook data.</p>
-                {% endfor %}
+              </div>
+              <div class="item-content">
+                {{ message.message|truncatewords:20 }}
+              </div>
+              <div style="font-size: 0.8rem; color: #666">
+                Page: {{ message.page.name }}
+              </div>
             </div>
+            {% empty %}
+            <p style="text-align: center; color: #666; padding: 2rem">
+              {% if missing_permissions %} No messages found. Missing
+              permissions: pages_messaging {% else %} No messages found. Sync
+              your data to see inbox messages. {% endif %}
+            </p>
+            {% endfor %}
+          </div>
         </div>
+
+        <!-- All Posts with Details -->
+        <div class="section">
+          <div class="section-header">All Posts with Engagement</div>
+          <div class="section-content">
+            {% for post in posts %}
+            <div class="item">
+              <div class="item-header">
+                <div class="item-title">{{ post.page.name }}</div>
+                <div class="item-date">
+                  {{ post.created_time|date:"M d, Y H:i" }}
+                </div>
+              </div>
+              <div class="item-content">
+                <strong>Post ID:</strong> {{ post.post_id }}<br />
+                <strong>Message:</strong> {{ post.message }}
+              </div>
+              <div class="engagement-stats">
+                <div class="engagement-stat">
+                  <span>👍</span>
+                  <span>{{ post.likes_count }}</span>
+                </div>
+                <div class="engagement-stat">
+                  <span>💬</span>
+                  <span>{{ post.comments_count }}</span>
+                </div>
+                <div class="engagement-stat">
+                  <span>🔄</span>
+                  <span>{{ post.shares_count }}</span>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <p style="text-align: center; color: #666; padding: 2rem">
+              No posts available. Please sync your Facebook data.
+            </p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Width Sections -->
+      <div class="section full-width">
+        <div class="section-header">👥 All Comments with User Details</div>
+        <div class="section-content">
+          {% for comment in comments %}
+          <div class="item">
+            <div class="item-header">
+              <div class="item-title">
+                {{ comment.from_name }} (ID: {{ comment.from_id }})
+              </div>
+              <div class="item-date">
+                {{ comment.created_time|date:"M d, Y H:i" }}
+              </div>
+            </div>
+            <div class="item-content">
+              <strong>Comment:</strong> {{ comment.message }}<br />
+              <strong>On Post:</strong> {{ comment.post.post_id }}<br />
+              <strong>Page:</strong> {{ comment.post.page.name }}
+            </div>
+          </div>
+          {% empty %}
+          <p style="text-align: center; color: #666; padding: 2rem">
+            {% if missing_permissions %} Comments require additional Facebook
+            permissions. See the guide above. {% else %} No comments available.
+            Please sync your Facebook data. {% endif %}
+          </p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="section full-width">
+        <div class="section-header">📬 All Messages with User Details</div>
+        <div class="section-content">
+          {% for message in messages %}
+          <div class="item">
+            <div class="item-header">
+              <div class="item-title">
+                {{ message.from_name }} (ID: {{ message.from_id }})
+              </div>
+              <div class="item-date">
+                {{ message.created_time|date:"M d, Y H:i" }}
+              </div>
+            </div>
+            <div class="item-content">
+              <strong>Message:</strong> {{ message.message }}<br />
+              <strong>Page:</strong> {{ message.page.name }}
+            </div>
+          </div>
+          {% empty %}
+          <p style="text-align: center; color: #666; padding: 2rem">
+            {% if missing_permissions %} Messages require additional Facebook
+            permissions. See the guide above. {% else %} No messages available.
+            Please sync your Facebook data. {% endif %}
+          </p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
 
     <script>
-        // Auto-refresh data every 5 minutes
-        setTimeout(function() {
-            window.location.reload();
-        }, 300000);
-        
-        // Add loading state to sync button
-        document.querySelector('.sync-btn').addEventListener('click', function(e) {
-            this.innerHTML = '⏳ Syncing...';
-            this.style.pointerEvents = 'none';
+      // Auto-refresh data every 5 minutes
+      setTimeout(function () {
+        window.location.reload();
+      }, 300000);
+
+      // Add loading state to sync button
+      document
+        .querySelector(".sync-btn")
+        .addEventListener("click", function (e) {
+          this.innerHTML = "⏳ Syncing...";
+          this.style.pointerEvents = "none";
         });
     </script>
-</body>
+  </body>
 </html>

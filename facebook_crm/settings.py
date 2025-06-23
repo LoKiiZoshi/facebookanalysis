@@ -121,7 +121,7 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' 
 
 
 
@@ -129,4 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Facebook API Configuration
 FACEBOOK_APP_ID = '1435605817637660'
 FACEBOOK_APP_SECRET = '1cea4b8514f86c712fa92284873310c4'
-FACEBOOK_ACCESS_TOKEN = 'EAAUZArQbMOxwBO0hWOIZCE8SJgltmlVy7zUEnIaZCYtS7ndQftLLq4AnCa7bUr8UYvN34mPc3zTklY2vpSRFBQfY9HSYtOyuNlTTXMAdrnGI22BKlfiWsOeayNJjtBaZATYRNDTFZBzppI1Cl6aq6ElBhTvyHACTTjq52TXAZBses528rnpqd7pe6FcL6R0RHJwXdfVZBdWfweWmpqFLNbqIZBKbp2UfR72x'
+FACEBOOK_ACCESS_TOKEN = 'EAAUZArQbMOxwBO3JNZANeCxNNExwYcMZAp81lqaK2KvK9oxrZB0yGUL7PNylftLqbj5Lr6EJ5lcXK7y7W3pZCY46GWARTvw4RPcMw9WDL3NVJZAtZC3JhZAk7AZBFHDeZAJ1fv3ht8FFwDQaAUfWgvimXUbnkZCEuRVVZAZBeZCr1FQblJLqy2GFZBtx2jEehDpixNaU2I0ZCNbz9u0500tiJPZCINuQa38WsjSdfyd4qeAZDZD'
+
+
+
