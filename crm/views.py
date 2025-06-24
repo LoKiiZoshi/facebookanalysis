@@ -6,14 +6,19 @@ from .models import FacebookPage, FacebookPost, FacebookComment, FacebookMessage
 from .facebook_api import FacebookGraphAPI
 import json
 
+
+
 def dashboard(request):
+    
     """Main dashboard view displaying all Facebook data"""
+    
     
     # Get all data from database
     pages = FacebookPage.objects.all()
     posts = FacebookPost.objects.all().order_by('-created_time')[:20]
     comments = FacebookComment.objects.all().order_by('-created_time')[:50]
     messages = FacebookMessage.objects.all().order_by('-created_time')[:50]
+    
     
     # Calculate totals
     total_posts = FacebookPost.objects.count()
@@ -22,14 +27,19 @@ def dashboard(request):
     total_shares = sum(post.shares_count for post in FacebookPost.objects.all())
     total_messages = FacebookMessage.objects.count()
     
+    
+    
     # Get recent activity
     recent_posts = FacebookPost.objects.order_by('-created_time')[:5]
     recent_comments = FacebookComment.objects.order_by('-created_time')[:10]
     recent_messages = FacebookMessage.objects.order_by('-created_time')[:10]
     
+    
+    
     # Get permission info
     api = FacebookGraphAPI()
     permission_info = api.get_missing_permissions_info()
+    
     
     context = {
         'pages': pages,
@@ -48,7 +58,12 @@ def dashboard(request):
         'granted_permissions': permission_info['granted'],
     }
     
+    
+    
     return render(request, 'crm/dashboard.html', context)
+
+
+
 
 def sync_facebook_data(request):
     """Enhanced sync with improved comment user name extraction"""
