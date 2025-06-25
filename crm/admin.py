@@ -24,3 +24,5 @@ class FacebookMessageAdmin(admin.ModelAdmin):
     list_display = ['message_id', 'from_name', 'page', 'created_time']
     list_filter = ['page', 'created_time']
     search_fields = ['from_name', 'message']
+    
+
