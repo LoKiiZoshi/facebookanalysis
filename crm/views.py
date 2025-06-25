@@ -44,7 +44,7 @@ def dashboard(request):
     
     
     
-    return render(request, 'crm/dashboard.html', context)
+
 
 
 
