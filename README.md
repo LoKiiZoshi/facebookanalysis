@@ -35,40 +35,7 @@ FACEBOOK_PAGE_ID = 'your-page-id'
 
 Run migrations:python manage.py makemigrations
 python manage.py migrate
-
-
 Start the development server:python manage.py runserver
-
-
-
-Usage
-
-Visit http://localhost:8000/ to fetch and display Facebook page posts.
-Extend core/views.py for additional analysis (e.g., sentiment, charts).
-
-Project Structure
-facebook_analysis/
-├── core/
-│   ├── migrations/
-│   ├── templates/
-│   │   ├── base.html
-│   │   ├── index.html
-│   │   └── results.html
-│   ├── models.py
-│   ├── urls.py
-│   └── views.py
-├── facebook_analysis/
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── manage.py
-└── requirements.txt
-
-Future Enhancements
-
 Add sentiment analysis using TextBlob or VADER.
 Integrate Chart.js for visualizing post metrics.
 Support user authentication via django-allauth for user-specific data.
-
-License
-MIT License
