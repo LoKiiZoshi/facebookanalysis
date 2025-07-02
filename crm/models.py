@@ -12,6 +12,7 @@ class FacebookPage(models.Model):
     def __str__(self):
         return self.name
 
+
 class FacebookPost(models.Model):
     post_id = models.CharField(max_length=100, unique=True)
     page = models.ForeignKey(FacebookPage, on_delete=models.CASCADE)
